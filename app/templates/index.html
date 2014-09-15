@@ -4,10 +4,13 @@
     {% if title %}
     <title>{{title}} - blog</title>
     {% else %}
-    <title>Welcome to blog</title>
+    <title>blog</title>
     {% endif %}
   </head>
   <body>
-      <h1>Hello, {{user.nickname}}!</h1>
+    <h1>Hi, {{user.nickname}}!</h1>
+    {% for post in posts %}
+    <p>{{post.author.nickname}} says: <b>{{post.body}}</b></p>
+    {% endfor %}
   </body>
 </html>

@@ -3,8 +3,5 @@ from app import app
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
-
-@app.route('/name')
-def name():
-    return "Hello, heesung!"
+    user = {'nickname': 'heesung'}# fake user
+    return render_template("index.html", title = 'Home', user = user)

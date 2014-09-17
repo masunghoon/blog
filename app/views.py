@@ -3,7 +3,14 @@ from app import app
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
-@app.route('/name')
-def name():
-    return "Hello, kang"
+    user = {'nickname','kang'}
+    return '''
+<html>
+  <head>
+    <title>Home Page  </title>
+  </head>
+  <body>
+    <h1>Hello, '''+user['nickname']+'''</h1>
+  </body>
+</html>
+'''

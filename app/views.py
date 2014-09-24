@@ -21,3 +21,7 @@ def index():
          user = user,
          posts = posts)
 
+
+
+
+

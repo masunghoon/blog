@@ -1,13 +1,22 @@
-from flask import render_template
+from flask import render_template, flash,redirect
 from app import app
+from forms import LoginForm
 
+@app.route('/login', methods = ['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('ID="' + form.openid.data + '". remember_me=' + str(form.remember_me.data))
+        return render_template('/index')
+    return redirect('login.html',
+                      title = 'Sign In',
+                      form = form)
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {'nickname':'Song'}
+    user = {'nickname':'moonku'}
     posts = [
-        {
-            'author':{'nickname':'John'},
+        {    'author':{'nickname':'John'},
             'body': 'Beautiful day in Korea!'
         },
         {

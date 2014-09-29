@@ -8,8 +8,17 @@
         {% endif %}
   </head>
   <body>
-   <div>Blog: <a href="/index">home</a></div>
+   <div>Blog: <a href="/index">Home</a><a href="/login">Login</a></div>
    <hr>
-  {% block content %}{% endblock %}
+   {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <ul>
+   {% for messages in messages %}
+       <li>{{ messages }} </li>
+   {% endfor %}
+   </ul>
+   {% endif %}
+   {% endwith %}
+   {% block content %}{% endblock %}
     </body>
  </html>

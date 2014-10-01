@@ -4,10 +4,14 @@ from forms import LoginForm
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
+    user = {'id':'kimtaesun', 'password':'kim4948'}
     form = LoginForm()
     if form.validate_on_submit():
-        flash('ID="'+ form.openid.data+ '", remeber_me='+ str(form.remember_me.data))
-        return redirect('/index')
+        if form.id.data ==user['id'] and form.password.data == user['password']:
+            flash('logged in as ' + form.id.data)
+            return redirect('/index')
+        else:
+            flash('Login Failed!!!!!!')
     return render_template('login.html', title = 'Log In', form =form)
 @app.route('/')
 @app.route('/index')

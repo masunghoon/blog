@@ -5,7 +5,7 @@ from forms import LoginForm
 @app.route('/')
 @app.route('/index')
 def index():
-    user = { 'nickname': 'Masunghoon' } # fake user
+    user = { 'nickname': 'Guest' } # fake user
     posts = [ # fake array of posts
         {
             'author': { 'nickname': 'John' },
@@ -24,8 +24,12 @@ def index():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
+    user = {'id':'wr8484', 'password':'123456'}
     form = LoginForm()
     if form.validate_on_submit():
-        flash('login requested for OpenID="' + form.openid.data + '", remember_me= ' + str(form.remember_me.data))
-        return redirect('/index')
+        if user['id'] == form.id.data and user['password'] == form.password.data:
+            flash('logged in as ' + form.id.data)
+            return redirect('/index')
+        else:
+            flash('login Failed!!!!!')
     return render_template('login.html', title = 'Sign In', form = form)

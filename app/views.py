@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, g
-from app import app
+from app import app, lm
 from forms import LoginForm
+from models import User
 
 @app.route('/')
 @app.route('/index')
@@ -35,3 +36,8 @@ def login():
         else:
             flash('login failed.')
     return render_template('login.html', title = 'Sign In', form = form)
+
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))

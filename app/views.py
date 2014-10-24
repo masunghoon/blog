@@ -6,12 +6,11 @@ from models import User
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    user = {'id':'aaa','password':'123'}
     form = LoginForm()
     if form.validate_on_submit():
-
-        if form.id.data == user['id'] and form.password.data == user['password']:
-            flash('logged in as ' + form.id.data)
+        user = User.query.filter_by(email=form.email.data).first()
+        if form.email.data == user.email and form.password.data == user.password:
+            flash(form.email.data + ' logged in')
             return redirect('/index')
         else:
             flash('Login Failed!')

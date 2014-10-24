@@ -2,14 +2,15 @@
 <html>
     <head>
         {% if title %}
-    <title>{{title}} -  blog</title>
+    <title>{{ title }} -  blog</title>
         {% else %}
     <title>Welcome to blog</title>
         {% endif %}
 </head>
 <body>
 <div>Blog: <a href="/index">Home</a>
-    <a href="/login">Login</a></div>
+            <a href="/login">Login</a>
+            <a href="/register"></a></div>
 <hr>
 {% with messages = get_flashed_messages() %}
 {% if messages %}

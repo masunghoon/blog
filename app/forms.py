@@ -3,7 +3,7 @@ from wtforms import TextField, BooleanField, StringField, PasswordField
 from wtforms.validators import Required
 
 class LoginForm(Form):
-    id = StringField('id')
+    email = StringField('email')
     password = PasswordField('password')
     remember_me = BooleanField('remember_me', default=False)
 

@@ -13,6 +13,8 @@
         {% endfor %}<br>
     </p>
     <p>{{form.remember_me}} Remember Me</p>
-    <p><input type="submit" value="Sign In"></p>
+    <p><input type="submit" value="Sign In">
+    <a href="{{ url_for('register') }}">register</a></p>
+
 </form>
 {% endblock %}

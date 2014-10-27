@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import re
+
 from flask import render_template, flash, redirect, g, url_for, session
-from flask.ext.login import login_user, logout_user, current_user
+from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, lm, db
 from forms import LoginForm, RegisterForm
 from models import User
@@ -32,7 +34,9 @@ def register():
 
     if form.validate_on_submit():
         u = User.query.filter_by(email=form.email.data).first()
-        if u is not None:
+        if re.match(r"^[a-zA-Z0-9._]+\@[a-zA-Z0-9._]+\.[a-zA-Z]{3,}$", form.email.data) is None:
+            flash('Invalid Email address')
+        elif u is not None:
             flash('Already Joined Email')
         elif form.password.data != form.valid_password.data:
             flash('Password Validation Failed.')
@@ -40,7 +44,18 @@ def register():
             user = User()
             user.email = form.email.data
             user.password = form.password.data
-            user.nickname = user.email.split('@')[0]
+
+            nickname = form.email.data.split('@')[0]
+            if User.query.filter_by(nickname=nickname).first() == None:
+                user.nickname = nickname
+            else:
+                version = 2
+                while True:
+                    new_nickname = nickname + str(version)
+                    if User.query.filter_by(nickname = new_nickname).first() == None:
+                        break
+                    version += 1
+                user.nickname = new_nickname
 
             db.session.add(user)
             db.session.commit()
@@ -81,6 +96,22 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/user/<nickname>')
+@login_required
+def user(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    if user == None:
+        flash('User %s not found.' % nickname)
+        return redirect(url_for('index'))
+    posts = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
+    return render_template('user.html',
+                           user=user,
+                           posts=posts)
 
 
 @lm.user_loader

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-{% if user %}
+{% if g.user.is_authenticated() %}
     <h1>Hi, {{user.email}}!</h1>
 {% else %}
     <h1>Hi, Guest</h1>

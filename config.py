@@ -1,2 +1,11 @@
 CSRF_ENABLED = True
-SECRETE_KEY = 'you-will-never-guess'
+SECRET_KEY = 'you-will-never-guess'
+
+##### DATABASE ####################################
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+SQLALCHEMY_RECORD_QUERIES = True
+# SQLALCHEMY_DATABASE_URI = 'mysql://ghas:rudwkrh@masunghoon.iptime.org/masunghoon'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')

@@ -9,8 +9,8 @@ from models import User, Post
 from datetime import datetime
 from config import POSTS_PER_PAGE
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @app.route('/index/<int:page>', methods=['GET', 'POST'])
 @login_required
 def index(page=1):

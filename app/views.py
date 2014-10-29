@@ -4,15 +4,20 @@ import re
 from flask import render_template, flash, redirect, g, url_for, session
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, lm, db
-from forms import LoginForm, RegisterForm, EditForm
-from models import User
+from forms import LoginForm, RegisterForm, EditForm, PostForm
+from models import User, Post
 from datetime import datetime
 
 @app.route('/')
 @app.route('/index')
 def index():
-    user = g.user
-    # user = { 'nickname': 'Masunghoon' } # fake user
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, timestamp=datetime.utcnow(), author=g.user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
     posts = [ # fake array of posts
         {
             'author': { 'nickname': 'John' },
@@ -25,7 +30,7 @@ def index():
     ]
     return render_template("index.html",
         title = 'Home',
-        user = user,
+        form = form,
         posts = posts)
 
 

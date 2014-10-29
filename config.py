@@ -9,3 +9,7 @@ SQLALCHEMY_RECORD_QUERIES = True
 # SQLALCHEMY_DATABASE_URI = 'mysql://ghas:rudwkrh@masunghoon.iptime.org/masunghoon'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
+
+# pagination
+POSTS_PER_PAGE = 3

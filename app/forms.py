@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import TextField, BooleanField, StringField, PasswordField, TextAreaField
-from wtforms.validators import Required, Length
+from wtforms.validators import DataRequired, Length
 from app.models import User
 
 class LoginForm(Form):
@@ -33,3 +33,6 @@ class EditForm(Form):
             self.nickname.errors.append('This nickname is already in use. Please choose another one.')
             return False
         return True
+
+class PostForm(Form):
+    post = StringField('post', validators=[DataRequired()])

@@ -112,6 +112,9 @@ def register():
 
             db.session.add(user)
             db.session.commit()
+            # make the user follow him/herself
+            db.session.add(user.follow(user))
+            db.session.commit()
 
             flash(user.email + ' registered successfully.')
             return redirect('/login')

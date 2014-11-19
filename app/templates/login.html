@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% include 'flash.html' %}
-<div class="well" style="height: 300px"></div>
+<div class="well" style="height: 300px">
     <h2>Please Sign In</h2>
-    <form class="form" action="post" name="login">
+    <form class="form" action="" method="post" name="login">
         {{form.hidden_tag()}}
         <div class="control-group{% if form.errors.openid %} error{% endif %}">
             <div class="controls">

@@ -1,14 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>회원가입</h1>
-<form action="" method="post" name="register">
-    {{form.hidden_tag()}}
-    <p>
-        Email: {{form.email(size=40)}} <br>
-        password: {{form.password(size=40)}}<br>
-        password_Validation: {{form.valid_password(size=40)}}
-    </p>
-    <p><input type="submit" value="Register"></p>
-</form>
+{% include 'flash.html' %}
+<div class="well" style="height: 300px">
+    <h2>Please Sign In</h2>
+    <form class="form" action="" method="post" name="register">
+        {{form.hidden_tag()}}
+        <div class="control-group{% if form.errors.openid %} error{% endif %}">
+            <div class="controls">
+                <table class="table table-condensed">
+                    <tr>
+                        <td><h4>E-MAIL</h4></td>
+                        <td>{{form.email(size=40)}}</td>
+                    </tr>
+                    <tr>
+                        <td><h4>Password</h4></td>
+                        <td>{{form.password(size=40)}}</td>
+                    </tr>
+                    <tr>
+                        <td><h4>Password Validation</h4></td>
+                        <td>{{form.valid_password(size=40)}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="control-group pull-right">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="Register">
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

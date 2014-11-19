@@ -40,20 +40,26 @@ def logout():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @app.route('/index/<int:page>', methods=['GET', 'POST'])
-@login_required
 def index(page=1):
     form = PostForm()
-    if form.validate_on_submit():
-        post = Post(body=form.post.data, timestamp=datetime.utcnow(), author=g.user)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post in now live!')
-        return redirect(url_for('index'))
-    posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE,False)
-    return render_template("index.html",
-        title = 'Home',
-        form = form,
-        posts = posts)
+    if g.user is not None and g.user.is_authenticated():
+        if form.validate_on_submit():
+            post = Post(body=form.post.data, timestamp=datetime.utcnow(), author=g.user)
+            db.session.add(post)
+            db.session.commit()
+            flash('Your post in now live!')
+            return redirect(url_for('index'))
+        posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE,False)
+        return render_template("index.html",
+            title = 'Home',
+            form = form,
+            posts = posts)
+    else:
+        return render_template("index.html",
+            title = 'Home',
+            form = form,
+            posts =[])
+
 
 @app.route('/user/<nickname>')
 @app.route('/user/<nickname>/<int:page>')

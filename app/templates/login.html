@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Sign In</h1>
-<form action="" method="post" name="login">
-    {{form.hidden_tag()}}
-    <p>
-        ID: {{form.email(size=40)}}<br>
-        {% for error in form.email.errors %}
-            <span style="color: red;">[{{error}}]</span>
-        {% endfor %}<br>
-        PW: {{form.password(size=40)}}<br>
-    </p>
-    <p>{{form.remember_me}} Remember Me</p>
-    <p><input type="submit" value="sign In">
-    <a href="{{ url_for('register') }}">register</a></p>
-</form>
+{% include 'flash.html' %}
+<div class="well" style="height: 300px"></div>
+    <h2>Please Sign In</h2>
+    <form class="form" action="post" name="login">
+        {{form.hidden_tag()}}
+        <div class="control-group{% if form.errors.openid %} error{% endif %}">
+            <div class="controls">
+                <table class="table table-condensed">
+                    <tr>
+                        <td><h4>ID</h4></td>
+                        <td>{{form.email(size=40)}}</td>
+                    </tr>
+                    <tr>
+                        <td><h4>Password</h4></td>
+                        <td>{{form.password(size=40)}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{ form.remember_me }} Remember Me</td>
+                    </tr>
+                </table>
+                {% for error in form.errors.openid %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group pull-right">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="Sign In">
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}
